@@ -2,19 +2,19 @@ import { initialState } from '../../action/repos/state';
 import { actionType } from '../../action/repos/type';
 
 export const reposReducer = ( state = initialState, action ) => {
-  switch(action.type){
+  switch(action.type) {
     // Read
     case actionType.loadRepo:
       state = {
-          ...state,
-          reposList: action.payload,
+        ...state,
+        reposList: action.payload
       }
       return state
     case actionType.loadRepoResetData:
-        return initialState
+      return initialState
     default:
-        return state
-  }
-}
+      return state
+  };
+};
 
-export default reposReducer
+export default reposReducer;

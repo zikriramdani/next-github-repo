@@ -4,16 +4,13 @@ import { actionType } from '../../action/repos/type';
 
 // Read
 export const getListRepos = () => {
-    // console.log('action.user getListRepos')
-    return (dispatch) => {
-        // console.log('dispatch getListRepos')
-        return axios.get(API_BASE_URL + '/repos').then(response => {
-            // console.log('axios getListRepos', response.data)
-            if(response.data) {
-                dispatch(saveListRepos(response.data))
-            }
-        })
-    }
+  return (dispatch) => {
+    return axios.get(API_BASE_URL + '/repos').then(response => {
+      if(response.data) {
+        dispatch(saveListRepos(response.data))
+      };
+    });
+  };
 };
 
 // Read

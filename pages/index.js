@@ -1,10 +1,22 @@
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getListRepos } from '../redux/action/repos/creator';
+
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 
-import { connect } from 'react-redux';
-import { getListUser } from '../redux/action/repos/creator';
+const Home = () => {
+  const reposList = useSelector((state) => state.repos.reposList)
+  const dispatch = useDispatch();
 
-export default function Home() {
+  const fetchRepoList = () => {
+    dispatch(getListRepos());
+  }
+
+  useEffect(() => {
+    fetchRepoList();
+  }, []);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -25,11 +37,47 @@ export default function Home() {
           <code className={styles.code}>pages/index.js</code>
         </p>
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+        <div className="container w-100">
+          <div className="row w-100">
+            {reposList.map((item, idx) => (
+              <div className="col-md-3 col-12 mb-4" key={idx}>
+                <div className="card h-100">
+                  <div className="card-body">
+                    <h5 className="card-title text-capitalize">{item.name}</h5>
+                    <h6 className="card-subtitle mb-2 text-muted">
+                      {item.full_name}
+                    </h6>
+                    <p className="card-text">
+                      {item.description ? (
+                        <>
+                          {item.description}
+                        </>
+                      ) : (
+                        <>
+                          No description
+                        </>
+                      )}
+                    </p>
+                  </div>
+                  <ul className="list-group list-group-flush">
+                    <li className="list-group-item">
+                      Owner: 
+                      <a href={item.owner.html_url} target="_blank" rel="noopener noreferrer" className='ps-1'>
+                        {item.owner.login}
+                      </a>
+                    </li>
+                  </ul>
+                  <div className="align-items-center card-body d-flex bg-primary"
+                  style={{height: "60px", maxHeight: "60px"}}>
+                      <a href={item.html_url} target="_blank" rel="noopener noreferrer"
+                      className="card-link text-white">Github link</a>
+                      <a href={item.clone_url} target="_blank" rel="noopener noreferrer"
+                      className="card-link text-white">Clone Url</a>
+                    </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </main>
 
@@ -45,3 +93,5 @@ export default function Home() {
     </div>
   )
 }
+
+export default Home;
