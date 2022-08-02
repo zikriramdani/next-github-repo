@@ -1,3 +1,3 @@
-import { incrementCounter, decrementCounter } from './counter/creator'
+import { getListRepos } from './counter/creator';
 
-export default { incrementCounter, decrementCounter }
+export default { getListRepos };
